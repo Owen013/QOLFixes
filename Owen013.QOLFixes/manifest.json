@@ -1,8 +1,8 @@
 {
-  "filename": "HatchlingOutfit.dll",
+  "filename": "QOLFixes.dll",
   "author": "Owen_013",
-  "name": "Hatchling Outfitter",
-  "uniqueName": "Owen013.HatchlingOutfit",
-  "version": "1.2.0",
+  "name": "Quality of Life Changes",
+  "uniqueName": "Owen013.QOLFixes",
+  "version": "0.1.0",
   "owmlVersion": "2.3.3"
 }
