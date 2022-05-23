@@ -1,0 +1,11 @@
+C:\Users\owen\AppData\Roaming\OuterWildsModManager\OWML\Mods\Owen013.HatchlingOutfit\default-config.json
+C:\Users\owen\AppData\Roaming\OuterWildsModManager\OWML\Mods\Owen013.HatchlingOutfit\manifest.json
+C:\Users\owen\AppData\Roaming\OuterWildsModManager\OWML\Mods\Owen013.HatchlingOutfit\HatchlingOutfit.dll
+C:\Users\owen\AppData\Roaming\OuterWildsModManager\OWML\Mods\Owen013.HatchlingOutfit\HatchlingOutfit.pdb
+C:\Users\owen\source\repos\Owen013.HatchlingOutfit\Owen013.HatchlingOutfit\obj\Debug\net48\HatchlingOutfit.csproj.AssemblyReference.cache
+C:\Users\owen\source\repos\Owen013.HatchlingOutfit\Owen013.HatchlingOutfit\obj\Debug\net48\HatchlingOutfit.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\owen\source\repos\Owen013.HatchlingOutfit\Owen013.HatchlingOutfit\obj\Debug\net48\HatchlingOutfit.AssemblyInfoInputs.cache
+C:\Users\owen\source\repos\Owen013.HatchlingOutfit\Owen013.HatchlingOutfit\obj\Debug\net48\HatchlingOutfit.AssemblyInfo.cs
+C:\Users\owen\source\repos\Owen013.HatchlingOutfit\Owen013.HatchlingOutfit\obj\Debug\net48\HatchlingOutfit.csproj.CoreCompileInputs.cache
+C:\Users\owen\source\repos\Owen013.HatchlingOutfit\Owen013.HatchlingOutfit\obj\Debug\net48\HatchlingOutfit.dll
+C:\Users\owen\source\repos\Owen013.HatchlingOutfit\Owen013.HatchlingOutfit\obj\Debug\net48\HatchlingOutfit.pdb
