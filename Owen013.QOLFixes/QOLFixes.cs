@@ -15,7 +15,7 @@ namespace QOLFixes
     {
         public static void DialogueTreeUpdate(CharacterDialogueTree __instance)
         {
-            if (OWInput.IsNewlyPressed(InputLibrary.cancel, InputMode.All)) __instance.EndConversation();
+            if (OWInput.IsNewlyPressed(InputLibrary.cancel, InputMode.Dialogue)) __instance.EndConversation();
         }
     }
 }
