@@ -1,6 +1,7 @@
 {
   "enabled": true,
   "settings": {
-
+    "Press Q to Exit Dialogue": true,
+    "Don't Freeze Time at a Certain End-Game Location": false
   }
 }
