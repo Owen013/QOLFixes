@@ -2,6 +2,7 @@
   "enabled": true,
   "settings": {
     "Press Q to Exit Dialogue": true,
-    "Don't Freeze Time at a Certain End-Game Location": false
+    "Don't Freeze Time at a Certain End-Game Location": true,
+    "Disable Automatic Scout Equipping": false
   }
 }
