@@ -7,7 +7,7 @@ namespace QOLFixes
     public class QOLFixes : ModBehaviour
     {
         // Config vars
-        public bool fastDialogueExitEnabled, noFreezeTimeAtEye, noAutoScoutEquip, eyesAlwaysGlow;
+        public bool noFreezeTimeAtEye, noAutoScoutEquip, fastDialogueExitEnabled, eyesAlwaysGlow;
 
         // Mod vars
         public static QOLFixes Instance;
@@ -15,10 +15,10 @@ namespace QOLFixes
         public override void Configure(IModConfig config)
         {
             base.Configure(config);
-            fastDialogueExitEnabled = config.GetSettingsValue<bool>("Press Q to Exit Dialogue");
             noFreezeTimeAtEye = config.GetSettingsValue<bool>("Don't Freeze Time at a Certain End-Game Location");
             noAutoScoutEquip = config.GetSettingsValue<bool>("Disable Automatic Scout Equipping");
-            eyesAlwaysGlow = config.GetSettingsValue<bool>("Eyes Always Glow");
+            fastDialogueExitEnabled = config.GetSettingsValue<bool>("Press Q to Exit Dialogue (Not Vanilla-Friendly)");
+            eyesAlwaysGlow = config.GetSettingsValue<bool>("Eyes Always Glow (Not Vanilla-Friendly)");
         }
 
         public void Awake()
