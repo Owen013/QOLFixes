@@ -1,8 +1,9 @@
 {
   "enabled": true,
   "settings": {
-    "Press Q to Exit Dialogue": true,
-    "Don't Freeze Time at a Certain End-Game Location": true,
-    "Disable Automatic Scout Equipping": false
+    "Press Q to Exit Dialogue": false,
+    "Don't Freeze Time at a Certain End-Game Location": false,
+    "Disable Automatic Scout Equipping": false,
+    "Eyes Always Glow": false
   }
 }
