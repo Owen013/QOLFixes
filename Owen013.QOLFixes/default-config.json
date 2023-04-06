@@ -1,9 +1,22 @@
 {
   "enabled": true,
   "settings": {
+    "Vanilla-Friendly": {
+      "type": "separator"
+    },
     "Don't Freeze Time at a Certain End-Game Location": true,
     "Disable Automatic Scout Equipping": false,
-    "Press Q to Exit Dialogue (Not Vanilla-Friendly)": false,
-    "Eyes Always Glow (Not Vanilla-Friendly)": false
+    "Disable Reticule": {
+      "type": "selector",
+      "value": "No",
+      "options": [ "No", "Unless using Scout", "Always" ],
+      "title": "Disable Reticule"
+    },
+
+    "NOT Vanilla-Friendly": {
+      "type": "separator"
+    },
+    "Press Q to Exit Dialogue": false,
+    "Eyes Always Glow": false
   }
 }
