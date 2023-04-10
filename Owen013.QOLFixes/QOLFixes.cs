@@ -14,6 +14,7 @@ namespace QOLFixes
         public bool _eyesAlwaysGlow;
         string _disableReticule;
         ReticleController _reticule;
+        List<ProbeLauncher> _probes;
 
         // Mod vars
         public static QOLFixesController Instance;
@@ -38,17 +39,22 @@ namespace QOLFixes
 
         public void Start()
         {
+            LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
+            {
+                if (loadScene != OWScene.SolarSystem && loadScene != OWScene.EyeOfTheUniverse) return;
+                _probes = new List<ProbeLauncher>(FindObjectsOfType<ProbeLauncher>());
+            };
+
             PrintLog("Quality of Life Changes is ready to go!", MessageType.Success);
         }
 
         public void UpdateReticule()
         {
-            if (_reticule == null) return;
+            if (_reticule == null  || _probes == null) return;
             bool usingProbe = false;
-            var probeLaunchers = FindObjectsOfType<ProbeLauncher>();
-            foreach (var probeLauncher in probeLaunchers)
+            foreach (var probe in _probes)
             {
-                if (probeLauncher.IsEquipped())
+                if (probe.IsEquipped())
                 {
                     usingProbe = true;
                     break;
