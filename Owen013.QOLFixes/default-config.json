@@ -16,7 +16,7 @@
     "NOT Vanilla-Friendly": {
       "type": "separator"
     },
-    "Press Q to Exit Dialogue": false,
-    "Eyes Always Glow": false
+    "Eyes Always Glow": false,
+    "Press Q to Exit Dialogue": false
   }
 }

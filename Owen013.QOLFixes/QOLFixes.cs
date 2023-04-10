@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using OWML.ModHelper;
 using OWML.Common;
+using System.Collections.Generic;
 
 namespace QOLFixes
 {
@@ -43,8 +44,17 @@ namespace QOLFixes
         public void UpdateReticule()
         {
             if (_reticule == null) return;
-            ProbeLauncher probe = FindObjectOfType<ProbeLauncher>();
-            if (_disableReticule == "No" || (_disableReticule == "Unless using Scout") && probe.IsEquipped()) _reticule.gameObject.SetActive(true);
+            bool usingProbe = false;
+            var probeLaunchers = FindObjectsOfType<ProbeLauncher>();
+            foreach (var probeLauncher in probeLaunchers)
+            {
+                if (probeLauncher.IsEquipped())
+                {
+                    usingProbe = true;
+                    break;
+                }
+            }
+            if (_disableReticule == "No" || (_disableReticule == "Unless using Scout" && usingProbe)) _reticule.gameObject.SetActive(true);
             else _reticule.gameObject.SetActive(false);
         }
 
