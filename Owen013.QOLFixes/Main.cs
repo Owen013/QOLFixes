@@ -1,8 +1,8 @@
 ﻿using HarmonyLib;
 using OWML.ModHelper;
 using OWML.Common;
-using System.Collections.Generic;
 using QOLFixes.Components;
+using UnityEngine.InputSystem;
 
 namespace QOLFixes
 {
@@ -12,13 +12,15 @@ namespace QOLFixes
         public static Main Instance;
         public delegate void ConfigureEvent();
         public event ConfigureEvent OnConfigure;
+        private ToolModeSwapper _toolModeSwapper;
 
         // config
         public bool IsFreezeTimeAtEyeDisabled;
         public bool DisableAutoScoutEquip;
-        public bool IsCancelDialogueEnabled;
-        public bool IsEyesAlwaysGlowEnabled;
         public string IsReticleDisabled;
+        public bool CanManuallyEquipTranslator;
+        public bool IsEyesAlwaysGlowEnabled;
+        public bool IsCancelDialogueEnabled;
         public bool IsDebugLogEnabled;
 
         public void DebugLog(string text, MessageType type = MessageType.Message, bool forceMessage = false)
@@ -32,14 +34,12 @@ namespace QOLFixes
             base.Configure(config);
             IsFreezeTimeAtEyeDisabled = config.GetSettingsValue<bool>("DisableFreezeTime");
             DisableAutoScoutEquip = config.GetSettingsValue<bool>("DisableAutoScoutEquip");
-            IsCancelDialogueEnabled = config.GetSettingsValue<bool>("ExitDialogue");
-            IsEyesAlwaysGlowEnabled = config.GetSettingsValue<bool>("EyesAlwaysGlow");
             IsReticleDisabled = config.GetSettingsValue<string>("DisableReticle");
+            CanManuallyEquipTranslator = config.GetSettingsValue<bool>("EquipTranslator");
+            IsEyesAlwaysGlowEnabled = config.GetSettingsValue<bool>("EyesAlwaysGlow");
+            IsCancelDialogueEnabled = config.GetSettingsValue<bool>("ExitDialogue");
 
-            if (OnConfigure != null)
-            {
-                OnConfigure();
-            }
+            OnConfigure?.Invoke();
         }
 
         private void Awake()
@@ -53,11 +53,26 @@ namespace QOLFixes
             DebugLog("Quality of Life Changes is ready to go!", MessageType.Success, true);
         }
 
+        private void Update()
+        {
+            if (CanManuallyEquipTranslator && _toolModeSwapper != null && Keyboard.current[Key.T].wasPressedThisFrame)
+            {
+                _toolModeSwapper.EquipToolMode(ToolMode.Translator);
+            }
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(ReticleController), nameof(ReticleController.Awake))]
         private static void ReticleControllerAwake(ReticleController __instance)
         {
             __instance.gameObject.AddComponent<ReticleVisibilityController>();
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(ToolModeSwapper), nameof(ToolModeSwapper.Awake))]
+        private static void ToolModeSwapperAwake(ToolModeSwapper __instance)
+        {
+            Instance._toolModeSwapper = __instance;
         }
 
         [HarmonyPostfix]

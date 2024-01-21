@@ -27,6 +27,13 @@
       "tooltip": "Disables the dot in the center of the screen. Gameplay impact: None."
     },
 
+    "EquipTranslator": {
+      "title": "Equip Translator with T",
+      "type": "toggle",
+      "value": true,
+      "tooltip": "Allows you to equip the translator whenever you want by pressing T. Gameplay impact: None."
+    },
+
     "NOT Vanilla-Friendly": {
       "type": "separator"
     },
