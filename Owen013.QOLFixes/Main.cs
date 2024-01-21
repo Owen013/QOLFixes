@@ -50,7 +50,7 @@ namespace QOLFixes
 
         private void Start()
         {
-            DebugLog("Quality of Life Changes is ready to go!", MessageType.Success);
+            DebugLog("Quality of Life Changes is ready to go!", MessageType.Success, true);
         }
 
         [HarmonyPostfix]
