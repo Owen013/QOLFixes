@@ -1,22 +1,46 @@
 {
+  "$schema": "https://json-schema.org/draft-07/schema",
   "enabled": true,
   "settings": {
     "Vanilla-Friendly": {
       "type": "separator"
     },
-    "Don't Freeze Time at a Certain End-Game Location": true,
-    "Disable Automatic Scout Equipping": false,
-    "Disable Reticule": {
+    "DisableFreezeTime": {
+      "title": "Don't Freeze Time at a Certain End-Game Location",
+      "type": "toggle",
+      "value": true,
+      "tooltip": "Disables the freezing of time in a location where it doesn't matter. Gameplay impact: None."
+    },
+
+    "DisableAutoScoutEquip": {
+      "title": "Disable Automatic Scout Equipping",
+      "type": "toggle",
+      "value": true,
+      "tooltip": "Disables scout being automatically equipped in certain areas. Gameplay impact: Very little."
+    },
+
+    "DisableReticle": {
+      "title": "Disable Reticle",
       "type": "selector",
       "value": "No",
-      "options": [ "No", "Unless using Scout", "Always" ],
-      "title": "Disable Reticule"
+      "options": [ "No", "Unless using Tool", "Always" ],
+      "tooltip": "Disables the dot in the center of the screen. Gameplay impact: None."
     },
 
     "NOT Vanilla-Friendly": {
       "type": "separator"
     },
-    "Eyes Always Glow": false,
-    "Press Q to Exit Dialogue": false
+    "EyesAlwaysGlow": {
+      "title": "Eyes Always Glow",
+      "type": "toggle",
+      "value": false,
+      "tooltip": "Makes a certain type of eye always glow. Gameplay impact: Makes certain sections a bit easier."
+    },
+    "ExitDialogue": {
+      "title": "Press 'Cancel' Button to Exit Dialogue",
+      "type": "toggle",
+      "value": false,
+      "tooltip": "Makes dialogue boxes from speaking to characters or reading notes disappear immediately if the cancel button is pressed. Gameplay impact: Functionally none, but can cause new players to miss information."
+    }
   }
 }
