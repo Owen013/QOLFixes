@@ -19,6 +19,13 @@ namespace QOLFixes
         public bool IsCancelDialogueEnabled;
         public bool IsEyesAlwaysGlowEnabled;
         public string IsReticleDisabled;
+        public bool IsDebugLogEnabled;
+
+        public void DebugLog(string text, MessageType type = MessageType.Message, bool forceMessage = false)
+        {
+            if (!IsDebugLogEnabled && !forceMessage) return;
+            ModHelper.Console.WriteLine(text, type);
+        }
 
         public override void Configure(IModConfig config)
         {
@@ -35,30 +42,15 @@ namespace QOLFixes
             }
         }
 
-        public void Awake()
+        private void Awake()
         {
             Instance = this;
             Harmony.CreateAndPatchAll(typeof(Main));
         }
 
-        public void Start()
+        private void Start()
         {
-            LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
-            {
-                if (loadScene != OWScene.SolarSystem && loadScene != OWScene.EyeOfTheUniverse) return;
-            };
-
-            PrintLog("Quality of Life Changes is ready to go!", MessageType.Success);
-        }
-
-        public void PrintLog(string message)
-        {
-            ModHelper.Console.WriteLine(message);
-        }
-
-        public void PrintLog(string message, MessageType messageType)
-        {
-            ModHelper.Console.WriteLine(message, messageType);
+            DebugLog("Quality of Life Changes is ready to go!", MessageType.Success);
         }
 
         [HarmonyPostfix]
