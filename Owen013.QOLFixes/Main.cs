@@ -43,12 +43,7 @@ namespace QOLFixes
 
         public void Start()
         {
-            LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
-            {
-                if (loadScene != OWScene.SolarSystem && loadScene != OWScene.EyeOfTheUniverse) return;
-            };
-
-            PrintLog("Quality of Life Changes is ready to go!", MessageType.Success);
+            DebugLog("Quality of Life Changes is ready to go!", MessageType.Success);
         }
 
         public void PrintLog(string message)
@@ -56,7 +51,7 @@ namespace QOLFixes
             ModHelper.Console.WriteLine(message);
         }
 
-        public void PrintLog(string message, MessageType messageType)
+        public void DebugLog(string message, MessageType messageType)
         {
             ModHelper.Console.WriteLine(message, messageType);
         }
