@@ -1,26 +1,28 @@
-﻿using UnityEngine;
+﻿using OWML.Common;
+using UnityEngine;
 
 namespace QOLFixes.Components;
 
-public class ReticleVisibilityController : MonoBehaviour
+public class ContextualReticleController : MonoBehaviour
 {
     private NomaiTranslatorProp _translatorTool;
     private ProbeLauncher[] _probeLaunchers;
 
-    private void Start()
+    private void Awake()
     {
+        Main.Instance.Log($"{nameof(ContextualReticleController)} added to {gameObject.name}", MessageType.Debug);
         _translatorTool = FindObjectOfType<NomaiTranslatorProp>();
         _probeLaunchers = FindObjectsOfType<ProbeLauncher>();
     }
 
     private void Update()
     {
-        if (Main.Instance.IsReticleDisabled == "No")
+        if (Config.ReticleMode == "Vanilla")
         {
             ReticleController.s_hideReticle = false;
             return;
         }
-        else if (Main.Instance.IsReticleDisabled == "Unless using Tool")
+        else if (Config.ReticleMode == "Contextual")
         {
             if (_translatorTool.enabled)
             {

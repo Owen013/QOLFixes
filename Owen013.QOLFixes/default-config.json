@@ -5,11 +5,12 @@
     "Vanilla-Friendly": {
       "type": "separator"
     },
-    "DisableFreezeTime": {
-      "title": "Don't Freeze Time at a Certain End-Game Location",
-      "type": "toggle",
-      "value": true,
-      "tooltip": "Disables the freezing of time in a location where it doesn't matter. Gameplay impact: None."
+    "ReticleMode": {
+      "title": "Reticle Mode",
+      "type": "selector",
+      "value": "Contextual",
+      "options": [ "Vanilla", "Contextual", "Disabled" ],
+      "tooltip": "Changes whether the dot in the center of the screen is visible. When set to Contextual, the reticle will only appear when using the scout launcher or translator tool. Gameplay impact: None."
     },
 
     "DisableAutoScoutEquip": {
@@ -19,18 +20,17 @@
       "tooltip": "Disables scout being automatically equipped in certain areas. Gameplay impact: Very little."
     },
 
-    "DisableReticle": {
-      "title": "Disable Reticle",
-      "type": "selector",
-      "value": "No",
-      "options": [ "No", "Unless using Tool", "Always" ],
-      "tooltip": "Disables the dot in the center of the screen. Gameplay impact: None."
+    "DisableFreezeTime": {
+      "title": "Don't Freeze Time at a Certain End-Game Location",
+      "type": "toggle",
+      "value": true,
+      "tooltip": "Disables the freezing of time in a location where it doesn't matter. Gameplay impact: None."
     },
 
     "EquipTranslator": {
       "title": "Equip Translator with T",
       "type": "toggle",
-      "value": true,
+      "value": false,
       "tooltip": "Allows you to equip the translator whenever you want by pressing T. Gameplay impact: None."
     },
 

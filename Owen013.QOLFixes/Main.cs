@@ -1,126 +1,43 @@
 ﻿using HarmonyLib;
 using OWML.ModHelper;
 using OWML.Common;
-using QOLFixes.Components;
-using UnityEngine.InputSystem;
+using System.Reflection;
 
-namespace QOLFixes
+namespace QOLFixes;
+
+public class Main : ModBehaviour
 {
-    public class Main : ModBehaviour
+    // Mod vars
+    public static Main Instance;
+    public delegate void ConfigureEvent();
+    public event ConfigureEvent OnConfigure;
+
+    public override void Configure(IModConfig config)
     {
-        // Mod vars
-        public static Main Instance;
-        public delegate void ConfigureEvent();
-        public event ConfigureEvent OnConfigure;
-        private ToolModeSwapper _toolModeSwapper;
+        base.Configure(config);
+        Config.ReticleMode = config.GetSettingsValue<string>("ReticleMode");
+        Config.IsAutoScoutEquipDisabled = config.GetSettingsValue<bool>("DisableAutoScoutEquip");
+        Config.IsFreezeTimeAtEyeDisabled = config.GetSettingsValue<bool>("DisableFreezeTime");
+        Config.CanManuallyEquipTranslator = config.GetSettingsValue<bool>("EquipTranslator");
+        Config.IsEyesAlwaysGlowEnabled = config.GetSettingsValue<bool>("EyesAlwaysGlow");
+        Config.IsCancelDialogueEnabled = config.GetSettingsValue<bool>("ExitDialogue");
 
-        // config
-        public bool IsFreezeTimeAtEyeDisabled;
-        public bool DisableAutoScoutEquip;
-        public string IsReticleDisabled;
-        public bool CanManuallyEquipTranslator;
-        public bool IsEyesAlwaysGlowEnabled;
-        public bool IsCancelDialogueEnabled;
-        public bool IsDebugLogEnabled;
+        OnConfigure?.Invoke();
+    }
 
-        public void DebugLog(string text, MessageType type = MessageType.Message, bool forceMessage = false)
-        {
-            if (!IsDebugLogEnabled && !forceMessage) return;
-            ModHelper.Console.WriteLine(text, type);
-        }
+    private void Awake()
+    {
+        Instance = this;
+        Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
+    }
 
-        public override void Configure(IModConfig config)
-        {
-            base.Configure(config);
-            IsFreezeTimeAtEyeDisabled = config.GetSettingsValue<bool>("DisableFreezeTime");
-            DisableAutoScoutEquip = config.GetSettingsValue<bool>("DisableAutoScoutEquip");
-            IsReticleDisabled = config.GetSettingsValue<string>("DisableReticle");
-            CanManuallyEquipTranslator = config.GetSettingsValue<bool>("EquipTranslator");
-            IsEyesAlwaysGlowEnabled = config.GetSettingsValue<bool>("EyesAlwaysGlow");
-            IsCancelDialogueEnabled = config.GetSettingsValue<bool>("ExitDialogue");
+    private void Start()
+    {
+        Log("Quality of Life Changes is ready to go!", MessageType.Success);
+    }
 
-            OnConfigure?.Invoke();
-        }
-
-        private void Awake()
-        {
-            Instance = this;
-            Harmony.CreateAndPatchAll(typeof(Main));
-        }
-
-        private void Start()
-        {
-            DebugLog("Quality of Life Changes is ready to go!", MessageType.Success, true);
-        }
-
-        private void Update()
-        {
-            if (CanManuallyEquipTranslator && _toolModeSwapper != null && Keyboard.current[Key.T].wasPressedThisFrame)
-            {
-                _toolModeSwapper.EquipToolMode(ToolMode.Translator);
-            }
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(ReticleController), nameof(ReticleController.Awake))]
-        private static void ReticleControllerAwake(ReticleController __instance)
-        {
-            __instance.gameObject.AddComponent<ReticleVisibilityController>();
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(ToolModeSwapper), nameof(ToolModeSwapper.Awake))]
-        private static void ToolModeSwapperAwake(ToolModeSwapper __instance)
-        {
-            Instance._toolModeSwapper = __instance;
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(CharacterDialogueTree), nameof(CharacterDialogueTree.Update))]
-        public static void DialogueTreeUpdate(CharacterDialogueTree __instance)
-        {
-            if (Instance.IsCancelDialogueEnabled && OWInput.IsNewlyPressed(InputLibrary.cancel, InputMode.Dialogue))
-            {
-                __instance.EndConversation();
-                Instance.ModHelper.Console.WriteLine($"QOLFixes: Exited dialogue for {__instance._characterName}");
-            }
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(CharacterDialogueTree), nameof(CharacterDialogueTree.StartConversation))]
-        public static void DialogueConversationStart(CharacterDialogueTree __instance)
-        {
-            if (Instance.IsFreezeTimeAtEyeDisabled && LoadManager.s_currentScene == OWScene.EyeOfTheUniverse)
-            {
-                __instance._timeFrozen = false;
-                OWTime.Unpause(OWTime.PauseType.Reading);
-                Instance.ModHelper.Console.WriteLine($"QOLFixes: Canceled time freeze for {__instance._characterName} dialogue.");
-            }
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(ProbePromptReceiver), nameof(ProbePromptReceiver.GainFocus))]
-        [HarmonyPatch(typeof(ProbePromptReceiver), nameof(ProbePromptReceiver.LoseFocus))]
-        public static bool ProbePromptEnterExit()
-        {
-            if (Instance.DisableAutoScoutEquip)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(GhostEffects), nameof(GhostEffects.SetEyeGlow))]
-        public static void Ghost_SetEyeGlow(GhostEffects __instance)
-        {
-            if (Instance.IsEyesAlwaysGlowEnabled)
-            {
-                __instance._eyeGlow = 1f;
-            }
-        }
+    public void Log(string text, MessageType type = MessageType.Message)
+    {
+        ModHelper.Console.WriteLine(text, type);
     }
 }
