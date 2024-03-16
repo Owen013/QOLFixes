@@ -16,7 +16,7 @@ public class ManualTranslatorEquipper : MonoBehaviour
 
     private void Update()
     {
-        if (Config.CanManuallyEquipTranslator && Keyboard.current[Key.T].wasPressedThisFrame)
+        if (Config.CanManuallyEquipTranslator && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.T].wasPressedThisFrame)
         {
             _toolModeSwapper.EquipToolMode(ToolMode.Translator);
         }

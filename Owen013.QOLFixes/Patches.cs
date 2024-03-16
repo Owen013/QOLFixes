@@ -67,4 +67,11 @@ public static class Patches
             __instance._eyeGlow = 1f;
         }
     }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(PlayerSpacesuit), nameof(PlayerSpacesuit.Start))]
+    private static void SpacesuitStart(PlayerSpacesuit __instance)
+    {
+        __instance.gameObject.AddComponent<HelmetToggler>();
+    }
 }

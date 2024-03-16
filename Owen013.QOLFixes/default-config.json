@@ -27,13 +27,6 @@
       "tooltip": "Disables the freezing of time in a location where it doesn't matter. Gameplay impact: None."
     },
 
-    "EquipTranslator": {
-      "title": "Equip Translator with T",
-      "type": "toggle",
-      "value": false,
-      "tooltip": "Allows you to equip the translator whenever you want by pressing T. Gameplay impact: None."
-    },
-
     "NOT Vanilla-Friendly": {
       "type": "separator"
     },
@@ -48,6 +41,18 @@
       "type": "toggle",
       "value": false,
       "tooltip": "Makes dialogue boxes from speaking to characters or reading notes disappear immediately if the cancel button is pressed. Gameplay impact: Functionally none, but can cause new players to miss information."
+    },
+    "CanRemoveHelmet": {
+      "title": "Press 'H' Button to Toggle Helmet",
+      "type": "toggle",
+      "value": false,
+      "tooltip": "Allows you to take off or put on your helmet with the H key."
+    },
+    "CanManuallyEquipTranslator": {
+      "title": "Press 'T' Button to Equip Translator",
+      "type": "toggle",
+      "value": false,
+      "tooltip": "Equip the translator whenever you want by pressing T."
     }
   }
 }

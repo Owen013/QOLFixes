@@ -14,14 +14,7 @@ public class Main : ModBehaviour
 
     public override void Configure(IModConfig config)
     {
-        base.Configure(config);
-        Config.ReticleMode = config.GetSettingsValue<string>("ReticleMode");
-        Config.IsAutoScoutEquipDisabled = config.GetSettingsValue<bool>("DisableAutoScoutEquip");
-        Config.IsFreezeTimeAtEyeDisabled = config.GetSettingsValue<bool>("DisableFreezeTime");
-        Config.CanManuallyEquipTranslator = config.GetSettingsValue<bool>("EquipTranslator");
-        Config.IsEyesAlwaysGlowEnabled = config.GetSettingsValue<bool>("EyesAlwaysGlow");
-        Config.IsCancelDialogueEnabled = config.GetSettingsValue<bool>("ExitDialogue");
-
+        Config.UpdateConfig(config);
         OnConfigure?.Invoke();
     }
 
