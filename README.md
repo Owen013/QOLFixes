@@ -5,8 +5,8 @@
 These features just change a few things that don't really affect gameplay but feel good to have. These are **enabled** by default.
 * **Disable Time-Freezing during Dialogue at a Certain Location**
   * There's an option in the vanilla game settings to freeze time while talking to characters. This can help make sure that you don't have to rush while talking to characters, but there's a certain location where that doesn't exactly matter. Enable this feature to disable time-freezing at that location!
-* **Disable the Reticule (the dot in the middle of the screen)**
-  * This reticule can be set to visible (default), invisible unless the Scout Launcher is equipped, or always invisible.
+* **Contextual Reticle**
+  * You can fully disable the reticle or have it only show up when you're using a tool.
 * **Disable Scout Launcher being automatically equipped**
 
 ### Non-Vanilla-Friendly
