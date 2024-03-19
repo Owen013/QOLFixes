@@ -1,5 +1,4 @@
-﻿using OWML.Common;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace QOLFixes.Components;
@@ -10,7 +9,7 @@ public class ManualTranslatorEquipper : MonoBehaviour
 
     private void Awake()
     {
-        Main.Instance.Log($"{nameof(ManualTranslatorEquipper)} added to {gameObject.name}", MessageType.Debug);
+        Main.Instance.Log($"{GetType().Name} added to {gameObject.name}", OWML.Common.MessageType.Debug);
         _toolModeSwapper = GetComponent<ToolModeSwapper>();
     }
 

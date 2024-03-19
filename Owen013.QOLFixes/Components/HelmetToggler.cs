@@ -9,6 +9,7 @@ namespace QOLFixes.Components
 
         private void Awake()
         {
+            Main.Instance.Log($"{GetType().Name} added to {gameObject.name}", OWML.Common.MessageType.Debug);
             _spacesuit = GetComponent<PlayerSpacesuit>();
             Main.Instance.OnConfigure += () =>
             {
@@ -21,9 +22,7 @@ namespace QOLFixes.Components
 
         private void Update()
         {
-            if (!Config.CanRemoveHelmet) return;
-
-            if (_spacesuit.IsWearingSuit() && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.H].wasPressedThisFrame)
+            if (Config.CanRemoveHelmet && _spacesuit.IsWearingSuit() && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.H].wasPressedThisFrame)
             {
                 if (_spacesuit.IsWearingHelmet())
                 {

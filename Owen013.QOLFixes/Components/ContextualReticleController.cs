@@ -1,5 +1,4 @@
-﻿using OWML.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace QOLFixes.Components;
 
@@ -10,7 +9,7 @@ public class ContextualReticleController : MonoBehaviour
 
     private void Awake()
     {
-        Main.Instance.Log($"{nameof(ContextualReticleController)} added to {gameObject.name}", MessageType.Debug);
+        Main.Instance.Log($"{GetType().Name} added to {gameObject.name}", OWML.Common.MessageType.Debug);
         _translatorTool = FindObjectOfType<NomaiTranslatorProp>();
         _probeLaunchers = FindObjectsOfType<ProbeLauncher>();
     }

@@ -8,45 +8,45 @@ public static class Patches
 {
     [HarmonyPostfix]
     [HarmonyPatch(typeof(ReticleController), nameof(ReticleController.Awake))]
-    private static void ReticleControllerAwake(ReticleController __instance)
+    private static void OnReticleControllerAwake(ReticleController __instance)
     {
         __instance.gameObject.AddComponent<ContextualReticleController>();
     }
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(ToolModeSwapper), nameof(ToolModeSwapper.Awake))]
-    private static void ToolModeSwapperAwake(ToolModeSwapper __instance)
+    private static void OnToolModeSwapperAwake(ToolModeSwapper __instance)
     {
         __instance.gameObject.AddComponent<ManualTranslatorEquipper>();
     }
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CharacterDialogueTree), nameof(CharacterDialogueTree.Update))]
-    public static void DialogueTreeUpdate(CharacterDialogueTree __instance)
+    public static void OnDialogueTreeUpdate(CharacterDialogueTree __instance)
     {
         if (Config.IsCancelDialogueEnabled && OWInput.IsNewlyPressed(InputLibrary.cancel, InputMode.Dialogue))
         {
             __instance.EndConversation();
-            Main.Instance.Log($"QOLFixes: Exited dialogue for {__instance._characterName}");
+            Main.Instance.Log($"Exited dialogue for {__instance._characterName}");
         }
     }
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CharacterDialogueTree), nameof(CharacterDialogueTree.StartConversation))]
-    public static void DialogueConversationStart(CharacterDialogueTree __instance)
+    public static void OnDialogueConversationStart(CharacterDialogueTree __instance)
     {
-        if (Config.IsFreezeTimeAtEyeDisabled && LoadManager.s_currentScene == OWScene.EyeOfTheUniverse)
+        if (Config.IsFreezeTimeAtEyeDisabled && LoadManager.s_currentScene == OWScene.EyeOfTheUniverse && __instance._timeFrozen)
         {
             __instance._timeFrozen = false;
             OWTime.Unpause(OWTime.PauseType.Reading);
-            Main.Instance.Log($"QOLFixes: Canceled time freeze for {__instance._characterName} dialogue.");
+            Main.Instance.Log($"Canceled time freeze for {__instance._characterName} dialogue.");
         }
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(ProbePromptReceiver), nameof(ProbePromptReceiver.GainFocus))]
     [HarmonyPatch(typeof(ProbePromptReceiver), nameof(ProbePromptReceiver.LoseFocus))]
-    public static bool ProbePromptEnterExit()
+    public static bool OnProbePromptEnterExit()
     {
         if (Config.IsAutoScoutEquipDisabled)
         {
@@ -60,7 +60,7 @@ public static class Patches
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(GhostEffects), nameof(GhostEffects.SetEyeGlow))]
-    public static void Ghost_SetEyeGlow(GhostEffects __instance)
+    public static void OnGhostSetEyeGlow(GhostEffects __instance)
     {
         if (Config.IsEyesAlwaysGlowEnabled)
         {
@@ -70,7 +70,7 @@ public static class Patches
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(PlayerSpacesuit), nameof(PlayerSpacesuit.Start))]
-    private static void SpacesuitStart(PlayerSpacesuit __instance)
+    private static void OnSpacesuitStart(PlayerSpacesuit __instance)
     {
         __instance.gameObject.AddComponent<HelmetToggler>();
     }
