@@ -1,38 +1,46 @@
-﻿using UnityEngine;
+﻿using HarmonyLib;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace QOLFixes.Components
+namespace QOLFixes.Components;
+
+[HarmonyPatch]
+public class HelmetToggler : MonoBehaviour
 {
-    public class HelmetToggler : MonoBehaviour
+    PlayerSpacesuit _spacesuit;
+
+    private void Awake()
     {
-        PlayerSpacesuit _spacesuit;
-
-        private void Awake()
+        _spacesuit = GetComponent<PlayerSpacesuit>();
+        Main.Instance.OnConfigure += () =>
         {
-            Main.Instance.Log($"{GetType().Name} added to {gameObject.name}", OWML.Common.MessageType.Debug);
-            _spacesuit = GetComponent<PlayerSpacesuit>();
-            Main.Instance.OnConfigure += () =>
+            if (!Config.CanRemoveHelmet && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
             {
-                if (!Config.CanRemoveHelmet && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
-                {
-                    _spacesuit.PutOnHelmet();
-                }
-            };
-        }
+                _spacesuit.PutOnHelmet();
+            }
+        };
+    }
 
-        private void Update()
+    private void Update()
+    {
+        if (Config.CanRemoveHelmet && _spacesuit.IsWearingSuit() && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.H].wasPressedThisFrame)
         {
-            if (Config.CanRemoveHelmet && _spacesuit.IsWearingSuit() && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.H].wasPressedThisFrame)
+            if (_spacesuit.IsWearingHelmet())
             {
-                if (_spacesuit.IsWearingHelmet())
-                {
-                    _spacesuit.RemoveHelmet();
-                }
-                else
-                {
-                    _spacesuit.PutOnHelmet();
-                }
+                _spacesuit.RemoveHelmet();
+            }
+            else if (_spacesuit.IsWearingSuit())
+            {
+                _spacesuit.PutOnHelmet();
             }
         }
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(PlayerSpacesuit), nameof(PlayerSpacesuit.Start))]
+    private static void OnSpacesuitStart(PlayerSpacesuit __instance)
+    {
+        __instance.gameObject.AddComponent<HelmetToggler>();
+        Main.Instance.Log($"{nameof(HelmetToggler)} added to {__instance.name}", OWML.Common.MessageType.Debug);
     }
 }

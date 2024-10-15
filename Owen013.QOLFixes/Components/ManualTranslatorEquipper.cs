@@ -1,23 +1,32 @@
-﻿using UnityEngine;
+﻿using HarmonyLib;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace QOLFixes.Components;
 
+[HarmonyPatch]
 public class ManualTranslatorEquipper : MonoBehaviour
 {
     private ToolModeSwapper _toolModeSwapper;
 
     private void Awake()
     {
-        Main.Instance.Log($"{GetType().Name} added to {gameObject.name}", OWML.Common.MessageType.Debug);
         _toolModeSwapper = GetComponent<ToolModeSwapper>();
     }
 
     private void Update()
     {
-        if (Config.CanManuallyEquipTranslator && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.T].wasPressedThisFrame)
+        if (Config.CanManuallyEquipTranslator && OWInput.IsInputMode(InputMode.Character) && Keyboard.current[Key.T].wasPressedThisFrame && !PlayerState.InDreamWorld())
         {
             _toolModeSwapper.EquipToolMode(ToolMode.Translator);
         }
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(ToolModeSwapper), nameof(ToolModeSwapper.Awake))]
+    private static void OnToolModeSwapperAwake(ToolModeSwapper __instance)
+    {
+        __instance.gameObject.AddComponent<ManualTranslatorEquipper>();
+        Main.Instance.Log($"{nameof(ManualTranslatorEquipper)} added to {__instance.name}", OWML.Common.MessageType.Debug);
     }
 }

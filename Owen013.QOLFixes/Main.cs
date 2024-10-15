@@ -7,9 +7,10 @@ namespace QOLFixes;
 
 public class Main : ModBehaviour
 {
-    // Mod vars
-    public static Main Instance;
+    public static Main Instance { get; private set; }
+
     public delegate void ConfigureEvent();
+
     public event ConfigureEvent OnConfigure;
 
     public override void Configure(IModConfig config)

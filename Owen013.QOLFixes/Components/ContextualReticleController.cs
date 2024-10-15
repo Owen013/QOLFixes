@@ -1,15 +1,17 @@
-﻿using UnityEngine;
+﻿using HarmonyLib;
+using UnityEngine;
 
 namespace QOLFixes.Components;
 
+[HarmonyPatch]
 public class ContextualReticleController : MonoBehaviour
 {
     private NomaiTranslatorProp _translatorTool;
+
     private ProbeLauncher[] _probeLaunchers;
 
     private void Awake()
     {
-        Main.Instance.Log($"{GetType().Name} added to {gameObject.name}", OWML.Common.MessageType.Debug);
         _translatorTool = FindObjectOfType<NomaiTranslatorProp>();
         _probeLaunchers = FindObjectsOfType<ProbeLauncher>();
     }
@@ -39,5 +41,13 @@ public class ContextualReticleController : MonoBehaviour
             }
         }
         ReticleController.s_hideReticle = true;
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(ReticleController), nameof(ReticleController.Awake))]
+    private static void OnReticleControllerAwake(ReticleController __instance)
+    {
+        __instance.gameObject.AddComponent<ContextualReticleController>();
+        Main.Instance.Log($"{nameof(ContextualReticleController)} added to {__instance.name}", OWML.Common.MessageType.Debug);
     }
 }
