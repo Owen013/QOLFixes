@@ -16,7 +16,7 @@ public class ManualTranslatorEquipper : MonoBehaviour
 
     private void Update()
     {
-        if (Config.CanManuallyEquipTranslator && OWInput.IsInputMode(InputMode.Character) && Keyboard.current[Key.T].wasPressedThisFrame && !PlayerState.InDreamWorld())
+        if (ModMain.CanManuallyEquipTranslator && OWInput.IsInputMode(InputMode.Character) && Keyboard.current[Key.T].wasPressedThisFrame && !PlayerState.InDreamWorld())
         {
             _toolModeSwapper.EquipToolMode(ToolMode.Translator);
         }
@@ -27,6 +27,6 @@ public class ManualTranslatorEquipper : MonoBehaviour
     private static void OnToolModeSwapperAwake(ToolModeSwapper __instance)
     {
         __instance.gameObject.AddComponent<ManualTranslatorEquipper>();
-        Main.Instance.Log($"{nameof(ManualTranslatorEquipper)} added to {__instance.name}", OWML.Common.MessageType.Debug);
+        ModMain.Instance.Log($"{nameof(ManualTranslatorEquipper)} added to {__instance.name}", OWML.Common.MessageType.Debug);
     }
 }

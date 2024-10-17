@@ -18,12 +18,12 @@ public class ContextualReticleController : MonoBehaviour
 
     private void Update()
     {
-        if (Config.ReticleMode == "Vanilla")
+        if (ModMain.ReticleMode == "Vanilla")
         {
             ReticleController.s_hideReticle = false;
             return;
         }
-        else if (Config.ReticleMode == "Contextual")
+        else if (ModMain.ReticleMode == "Contextual")
         {
             if (_translatorTool.enabled)
             {
@@ -48,6 +48,6 @@ public class ContextualReticleController : MonoBehaviour
     private static void OnReticleControllerAwake(ReticleController __instance)
     {
         __instance.gameObject.AddComponent<ContextualReticleController>();
-        Main.Instance.Log($"{nameof(ContextualReticleController)} added to {__instance.name}", OWML.Common.MessageType.Debug);
+        ModMain.Instance.Log($"{nameof(ContextualReticleController)} added to {__instance.name}", OWML.Common.MessageType.Debug);
     }
 }
