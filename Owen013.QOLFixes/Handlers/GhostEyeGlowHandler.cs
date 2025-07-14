@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace QOLFixes;
+namespace QOLFixes.Handlers;
 
 [HarmonyPatch]
 public static class GhostEyeGlowHandler

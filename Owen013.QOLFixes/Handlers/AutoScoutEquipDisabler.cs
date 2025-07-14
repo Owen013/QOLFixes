@@ -1,9 +1,9 @@
 ﻿using HarmonyLib;
 
-namespace QOLFixes;
+namespace QOLFixes.Handlers;
 
 [HarmonyPatch]
-public static class ManualScoutEquipHandler
+public static class AutoScoutEquipDisabler
 {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(ProbePromptReceiver), nameof(ProbePromptReceiver.GainFocus))]

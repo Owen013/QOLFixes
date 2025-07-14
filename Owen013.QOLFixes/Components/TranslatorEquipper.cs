@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 namespace QOLFixes.Components;
 
 [HarmonyPatch]
-public class ManualTranslatorEquipper : MonoBehaviour
+public class TranslatorEquipper : MonoBehaviour
 {
     private ToolModeSwapper _toolModeSwapper;
 
@@ -26,7 +26,7 @@ public class ManualTranslatorEquipper : MonoBehaviour
     [HarmonyPatch(typeof(ToolModeSwapper), nameof(ToolModeSwapper.Awake))]
     private static void OnToolModeSwapperAwake(ToolModeSwapper __instance)
     {
-        __instance.gameObject.AddComponent<ManualTranslatorEquipper>();
-        ModMain.Instance.Log($"{nameof(ManualTranslatorEquipper)} added to {__instance.name}", OWML.Common.MessageType.Debug);
+        __instance.gameObject.AddComponent<TranslatorEquipper>();
+        ModMain.Instance.Log($"{nameof(TranslatorEquipper)} added to {__instance.name}", OWML.Common.MessageType.Debug);
     }
 }
