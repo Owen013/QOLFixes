@@ -10,7 +10,7 @@ public static class AutoScoutEquipDisabler
     [HarmonyPatch(typeof(ProbePromptReceiver), nameof(ProbePromptReceiver.LoseFocus))]
     public static bool OnProbePromptEnterExit()
     {
-        if (ModMain.IsAutoScoutEquipDisabled)
+        if (ModMain.Instance.IsAutoScoutEquipDisabled)
         {
             return false;
         }

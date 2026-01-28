@@ -9,10 +9,10 @@ public static class DialogueHandler
     [HarmonyPatch(typeof(CharacterDialogueTree), nameof(CharacterDialogueTree.Update))]
     public static void OnDialogueTreeUpdate(CharacterDialogueTree __instance)
     {
-        if (ModMain.IsCancelDialogueEnabled && OWInput.IsNewlyPressed(InputLibrary.cancel, InputMode.Dialogue))
+        if (ModMain.Instance.IsCancelDialogueEnabled && OWInput.IsNewlyPressed(InputLibrary.cancel, InputMode.Dialogue))
         {
             __instance.EndConversation();
-            ModMain.Instance.Log($"Exited dialogue for {__instance._characterName}");
+            ModMain.Instance.ModHelper.Console.WriteLine($"Exited dialogue for {__instance._characterName}");
         }
     }
 
@@ -20,11 +20,11 @@ public static class DialogueHandler
     [HarmonyPatch(typeof(CharacterDialogueTree), nameof(CharacterDialogueTree.StartConversation))]
     public static void OnDialogueConversationStart(CharacterDialogueTree __instance)
     {
-        if (ModMain.IsFreezeTimeAtEyeDisabled && LoadManager.s_currentScene == OWScene.EyeOfTheUniverse && __instance._timeFrozen)
+        if (ModMain.Instance.IsFreezeTimeAtEyeDisabled && LoadManager.s_currentScene == OWScene.EyeOfTheUniverse && __instance._timeFrozen)
         {
             __instance._timeFrozen = false;
             OWTime.Unpause(OWTime.PauseType.Reading);
-            ModMain.Instance.Log($"Canceled time freeze for {__instance._characterName} dialogue.");
+            ModMain.Instance.ModHelper.Console.WriteLine($"Canceled time freeze for {__instance._characterName} dialogue.");
         }
     }
 }

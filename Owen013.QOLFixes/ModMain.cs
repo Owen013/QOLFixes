@@ -9,19 +9,19 @@ public class ModMain : ModBehaviour
 {
     public static ModMain Instance { get; private set; }
 
-    public static string ReticleMode { get; private set; }
+    public string ReticleMode { get; private set; }
 
-    public static bool IsAutoScoutEquipDisabled { get; private set; }
+    public bool IsAutoScoutEquipDisabled { get; private set; }
 
-    public static bool IsFreezeTimeAtEyeDisabled { get; private set; }
+    public bool IsFreezeTimeAtEyeDisabled { get; private set; }
 
-    public static bool IsEyesAlwaysGlowEnabled { get; private set; }
+    public bool IsEyesAlwaysGlowEnabled { get; private set; }
 
-    public static bool IsCancelDialogueEnabled { get; private set; }
+    public bool IsCancelDialogueEnabled { get; private set; }
 
-    public static bool CanRemoveHelmet { get; private set; }
+    public bool CanRemoveHelmet { get; private set; }
 
-    public static bool CanManuallyEquipTranslator { get; private set; }
+    public bool CanManuallyEquipTranslator { get; private set; }
 
     public delegate void ConfigureEvent();
 
@@ -50,11 +50,6 @@ public class ModMain : ModBehaviour
 
     private void Start()
     {
-        Log("Quality of Life Changes is ready to go!", MessageType.Success);
-    }
-
-    public void Log(string text, MessageType type = MessageType.Message)
-    {
-        ModHelper.Console.WriteLine(text, type);
+        ModHelper.Console.WriteLine("Quality of Life Changes is ready to go!", MessageType.Success);
     }
 }

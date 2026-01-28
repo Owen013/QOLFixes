@@ -14,7 +14,7 @@ public class HelmetToggler : MonoBehaviour
         _spacesuit = GetComponent<PlayerSpacesuit>();
         ModMain.Instance.OnConfigure += () =>
         {
-            if (!ModMain.CanRemoveHelmet && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
+            if (!ModMain.Instance.CanRemoveHelmet && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
             {
                 _spacesuit.PutOnHelmet();
             }
@@ -23,7 +23,7 @@ public class HelmetToggler : MonoBehaviour
 
     private void Update()
     {
-        if (ModMain.CanRemoveHelmet && _spacesuit.IsWearingSuit() && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.H].wasPressedThisFrame)
+        if (ModMain.Instance.CanRemoveHelmet && _spacesuit.IsWearingSuit() && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.H].wasPressedThisFrame)
         {
             if (_spacesuit.IsWearingHelmet())
             {
@@ -41,6 +41,6 @@ public class HelmetToggler : MonoBehaviour
     private static void OnSpacesuitStart(PlayerSpacesuit __instance)
     {
         __instance.gameObject.AddComponent<HelmetToggler>();
-        ModMain.Instance.Log($"{nameof(HelmetToggler)} added to {__instance.name}", OWML.Common.MessageType.Debug);
+        ModMain.Instance.ModHelper.Console.WriteLine($"{nameof(HelmetToggler)} added to {__instance.name}", OWML.Common.MessageType.Debug);
     }
 }

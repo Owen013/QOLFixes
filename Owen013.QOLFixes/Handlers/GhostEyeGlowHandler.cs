@@ -9,7 +9,7 @@ public static class GhostEyeGlowHandler
     [HarmonyPatch(typeof(GhostEffects), nameof(GhostEffects.SetEyeGlow))]
     public static void OnGhostSetEyeGlow(GhostEffects __instance)
     {
-        if (ModMain.IsEyesAlwaysGlowEnabled)
+        if (ModMain.Instance.IsEyesAlwaysGlowEnabled)
         {
             __instance._eyeGlow = 1f;
         }
