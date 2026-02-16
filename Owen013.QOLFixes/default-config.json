@@ -9,11 +9,11 @@
       "title": "Reticle Mode",
       "type": "selector",
       "value": "Contextual",
-      "options": [ "Vanilla", "Contextual", "Disabled" ],
+      "options": [ "Vanilla", "Contextual", "Hidden" ],
       "tooltip": "Changes whether the dot in the center of the screen is visible. When set to Contextual, the reticle will only appear when using the scout launcher or translator tool. Gameplay impact: None."
     },
 
-    "DisableAutoScoutEquip": {
+    "DisableAutoScoutEquipping": {
       "title": "Disable Automatic Scout Equipping",
       "type": "toggle",
       "value": true,
@@ -30,25 +30,25 @@
     "NOT Vanilla-Friendly": {
       "type": "separator"
     },
-    "EyesAlwaysGlow": {
+    "EnableEyesAlwaysGlow": {
       "title": "Eyes Always Glow",
       "type": "toggle",
       "value": false,
       "tooltip": "Makes a certain type of eye always glow. Gameplay impact: Makes certain sections a bit easier."
     },
-    "ExitDialogue": {
+    "EnableDialogueCancelling": {
       "title": "Press 'Cancel' Button to Exit Dialogue",
       "type": "toggle",
       "value": false,
       "tooltip": "Makes dialogue boxes from speaking to characters or reading notes disappear immediately if the cancel button is pressed. Gameplay impact: Functionally none, but can cause new players to miss information."
     },
-    "CanRemoveHelmet": {
+    "EnableHelmetToggling": {
       "title": "Press 'H' Button to Toggle Helmet",
       "type": "toggle",
       "value": false,
       "tooltip": "Allows you to take off or put on your helmet with the H key."
     },
-    "CanManuallyEquipTranslator": {
+    "EnableManualTranslatorEquipping": {
       "title": "Press 'T' Button to Equip Translator",
       "type": "toggle",
       "value": false,

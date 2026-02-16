@@ -12,27 +12,21 @@ public class HelmetToggler : MonoBehaviour
     private void Awake()
     {
         _spacesuit = GetComponent<PlayerSpacesuit>();
-        ModMain.Instance.OnConfigure += () =>
+        Config.OnConfigure += () =>
         {
-            if (!ModMain.Instance.CanRemoveHelmet && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
-            {
+            if (!Config.EnableHelmetToggling && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
                 _spacesuit.PutOnHelmet();
-            }
         };
     }
 
     private void Update()
     {
-        if (ModMain.Instance.CanRemoveHelmet && _spacesuit.IsWearingSuit() && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.H].wasPressedThisFrame)
+        if (Config.EnableHelmetToggling && _spacesuit.IsWearingSuit() && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.H].wasPressedThisFrame)
         {
             if (_spacesuit.IsWearingHelmet())
-            {
                 _spacesuit.RemoveHelmet();
-            }
             else if (_spacesuit.IsWearingSuit())
-            {
                 _spacesuit.PutOnHelmet();
-            }
         }
     }
 
