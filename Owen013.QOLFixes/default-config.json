@@ -42,10 +42,11 @@
       "value": false,
       "tooltip": "Makes dialogue boxes from speaking to characters or reading notes disappear immediately if the cancel button is pressed. Gameplay impact: Functionally none, but can cause new players to miss information."
     },
-    "EnableHelmetToggling": {
+    "HelmetTogglingMode": {
       "title": "Press 'H' Button to Toggle Helmet",
-      "type": "toggle",
-      "value": false,
+      "type": "selector",
+      "value": "Never",
+      "options": [ "Never", "When Safe", "Always" ],
       "tooltip": "Allows you to take off or put on your helmet with the H key."
     },
     "EnableManualTranslatorEquipping": {

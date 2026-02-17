@@ -15,7 +15,7 @@ public static class Config
 
     public static bool EnableDialogueCancelling { get; private set; }
 
-    public static bool EnableHelmetToggling { get; private set; }
+    public static string HelmetTogglingMode { get; private set; }
 
     public static bool EnableManualTranslatorEquipping { get; private set; }
 
@@ -28,7 +28,7 @@ public static class Config
         DisableFreezeTime = config.GetSettingsValue<bool>("DisableFreezeTime");
         EnableEyesAlwaysGlow = config.GetSettingsValue<bool>("EnableEyesAlwaysGlow");
         EnableDialogueCancelling = config.GetSettingsValue<bool>("EnableDialogueCancelling");
-        EnableHelmetToggling = config.GetSettingsValue<bool>("EnableHelmetToggling");
+        HelmetTogglingMode = config.GetSettingsValue<string>("HelmetTogglingMode");
         EnableManualTranslatorEquipping = config.GetSettingsValue<bool>("EnableManualTranslatorEquipping");
 
         OnConfigure?.Invoke();

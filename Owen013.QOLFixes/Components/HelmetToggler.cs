@@ -4,37 +4,80 @@ using UnityEngine.InputSystem;
 
 namespace QOLFixes.Components;
 
-[HarmonyPatch]
 public class HelmetToggler : MonoBehaviour
 {
-    PlayerSpacesuit _spacesuit;
+    public static HelmetToggler Instance { get; private set; }
+
+    public bool IsHelmetRemoved { get; private set; }
+
+    private PlayerSpacesuit _spacesuit;
+
+    private PlayerCharacterController _playerController;
+
+    private PlayerResources _resources;
+
+    private NotificationDisplay _suitDisplay;
+
+    private bool _wasOxygenPresent;
+
+    public void PutOnHelmet()
+    {
+        IsHelmetRemoved = false;
+        _spacesuit.PutOnHelmet();
+    }
+
+    public void RemoveHelmet()
+    {
+        IsHelmetRemoved = true;
+        _spacesuit.RemoveHelmet();
+    }
+
+    internal static void AddToPlayerSpacesuit(PlayerSpacesuit spacesuit)
+    {
+        var helmetToggler = spacesuit.gameObject.AddComponent<HelmetToggler>();
+        helmetToggler._spacesuit = spacesuit;
+        ModMain.Instance.ModHelper.Console.WriteLine($"{nameof(HelmetToggler)} added to {spacesuit.name}", OWML.Common.MessageType.Debug);
+    }
+
+    internal void OnUpdateOxygenPresence()
+    {
+        if (!_spacesuit.IsWearingHelmet() && _wasOxygenPresent && !_resources.IsOxygenPresent())
+            PutOnHelmet();
+
+        _wasOxygenPresent = _resources.IsOxygenPresent();
+    }
 
     private void Awake()
     {
-        _spacesuit = GetComponent<PlayerSpacesuit>();
+        Instance = this;
+        _playerController = Locator.GetPlayerController();
+        _resources = _playerController._playerResources;
+        _suitDisplay = FindObjectOfType<SuitNotificationDisplay>();
         Config.OnConfigure += () =>
         {
-            if (!Config.EnableHelmetToggling && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
-                _spacesuit.PutOnHelmet();
+            if (Config.HelmetTogglingMode == "Never" && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
+                PutOnHelmet();
         };
+    }
+
+    private bool IsInputting()
+    {
+        return OWInput.IsInputMode(InputMode.Character) && !_playerController._isMovementLocked && Keyboard.current[Key.H].wasPressedThisFrame;
     }
 
     private void Update()
     {
-        if (Config.EnableHelmetToggling && _spacesuit.IsWearingSuit() && OWInput.GetInputMode() != InputMode.Menu && Keyboard.current[Key.H].wasPressedThisFrame)
+        if (Config.HelmetTogglingMode != "Never" && _spacesuit.IsWearingSuit() && IsInputting())
         {
             if (_spacesuit.IsWearingHelmet())
-                _spacesuit.RemoveHelmet();
+            {
+                if (Config.HelmetTogglingMode == "Always" || _resources.IsOxygenPresent())
+                    RemoveHelmet();
+                else
+                    _suitDisplay.PushNotification(new NotificationData(NotificationTarget.Player, "CANNOT REMOVE HELMET — NO OXYGEN DETECTED", 3f));
+            }
             else if (_spacesuit.IsWearingSuit())
-                _spacesuit.PutOnHelmet();
+                PutOnHelmet();
         }
-    }
-
-    [HarmonyPostfix]
-    [HarmonyPatch(typeof(PlayerSpacesuit), nameof(PlayerSpacesuit.Start))]
-    private static void OnSpacesuitStart(PlayerSpacesuit __instance)
-    {
-        __instance.gameObject.AddComponent<HelmetToggler>();
-        ModMain.Instance.ModHelper.Console.WriteLine($"{nameof(HelmetToggler)} added to {__instance.name}", OWML.Common.MessageType.Debug);
     }
 }
