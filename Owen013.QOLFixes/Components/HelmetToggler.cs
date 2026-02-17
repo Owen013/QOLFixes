@@ -23,22 +23,18 @@ public class HelmetToggler : MonoBehaviour
 
     public void PutOnHelmet()
     {
-        if (IsHelmetRemoved && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
-        {
-            _spacesuit.PutOnHelmet();
-        }
-
+        bool wasHelmetRemoved = IsHelmetRemoved;
         IsHelmetRemoved = false;
+        if (wasHelmetRemoved && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
+            _spacesuit.PutOnHelmet();
     }
 
     public void RemoveHelmet()
     {
-        if (!IsHelmetRemoved && _spacesuit.IsWearingSuit() && _spacesuit.IsWearingHelmet())
-        {
-            _spacesuit.RemoveHelmet();
-        }
-
+        bool wasHelmetRemoved = IsHelmetRemoved;
         IsHelmetRemoved = true;
+        if (!wasHelmetRemoved && _spacesuit.IsWearingSuit() && _spacesuit.IsWearingHelmet())
+            _spacesuit.RemoveHelmet();
     }
 
     internal static void AddToPlayerSpacesuit(PlayerSpacesuit spacesuit)
@@ -73,13 +69,13 @@ public class HelmetToggler : MonoBehaviour
     private bool IsInputting()
     {
         bool canInput = OWInput.IsInputMode(InputMode.Character) && !_playerController._isMovementLocked;
-        bool wasButtonPressed = Keyboard.current[Key.H].wasPressedThisFrame || Gamepad.current[GamepadButton.LeftStick].wasPressedThisFrame;
+        bool wasButtonPressed = Keyboard.current != null && Keyboard.current[Key.H].wasPressedThisFrame || Gamepad.current != null && Gamepad.current[GamepadButton.LeftStick].wasPressedThisFrame;
         return canInput && wasButtonPressed;
     }
 
     private void Update()
     {
-        if (Config.HelmetTogglingMode != HelmetTogglingMode.Never)
+        if (Config.HelmetTogglingMode != HelmetTogglingMode.Never && IsInputting())
         {
             if (!IsHelmetRemoved)
             {

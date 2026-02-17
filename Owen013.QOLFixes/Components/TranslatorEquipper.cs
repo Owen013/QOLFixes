@@ -20,7 +20,7 @@ public class TranslatorEquipper : MonoBehaviour
 
     private void Update()
     {
-        if (Config.ManualTranslatorEquipping && OWInput.IsInputMode(InputMode.Character) && Keyboard.current[Key.T].wasPressedThisFrame && !PlayerState.InDreamWorld())
+        if (Config.ManualTranslatorEquipping && OWInput.IsInputMode(InputMode.Character) && Keyboard.current != null && Keyboard.current[Key.T].wasPressedThisFrame && !PlayerState.InDreamWorld())
         {
             if (_toolModeSwapper.GetToolMode() == ToolMode.Translator)
                 _toolModeSwapper.EquipToolMode(ToolMode.None);
