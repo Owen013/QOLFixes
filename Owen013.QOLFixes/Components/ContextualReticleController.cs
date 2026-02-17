@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using QOLFixes.Enums;
+using UnityEngine;
 
 namespace QOLFixes.Components;
 
@@ -21,8 +22,8 @@ public class ContextualReticleController : MonoBehaviour
     {
         ReticleController.s_hideReticle = Config.ReticleMode switch
         {
-            "Contextual" => !(_toolModeSwapper.IsInToolMode(ToolMode.Probe) || _toolModeSwapper.IsInToolMode(ToolMode.Translator)),
-            "Hidden" => true,
+            ReticleMode.Contextual => !(_toolModeSwapper.IsInToolMode(ToolMode.Probe) || _toolModeSwapper.IsInToolMode(ToolMode.Translator)),
+            ReticleMode.Hidden => true,
             _ => false
         };
     }

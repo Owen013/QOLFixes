@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using QOLFixes.Components;
+using QOLFixes.Enums;
 
 namespace QOLFixes;
 
@@ -33,7 +34,7 @@ internal static class Patches
     [HarmonyPatch(typeof(GhostEffects), nameof(GhostEffects.SetEyeGlow))]
     private static void GhostEffects_SetEyeGlow_Prefix(GhostEffects __instance)
     {
-        if (Config.EnableEyesAlwaysGlow)
+        if (Config.MoreVisibleGhosts)
             __instance._eyeGlow = 1f;
     }
 
@@ -54,7 +55,7 @@ internal static class Patches
     [HarmonyPatch(typeof(PlayerResources), nameof(PlayerResources.UpdateOxygen))]
     private static void PlayerResources_UpdateOxygen_Prefix()
     {
-        if (Config.HelmetTogglingMode != "When Safe" || HelmetToggler.Instance == null) return;
+        if (Config.HelmetTogglingMode != HelmetTogglingMode.WhenSafe || HelmetToggler.Instance == null) return;
         HelmetToggler.Instance.OnUpdateOxygenPresence();
     }
 

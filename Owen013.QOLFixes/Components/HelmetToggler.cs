@@ -1,6 +1,7 @@
-﻿using HarmonyLib;
+﻿using QOLFixes.Enums;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace QOLFixes.Components;
 
@@ -22,14 +23,22 @@ public class HelmetToggler : MonoBehaviour
 
     public void PutOnHelmet()
     {
+        if (IsHelmetRemoved && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
+        {
+            _spacesuit.PutOnHelmet();
+        }
+
         IsHelmetRemoved = false;
-        _spacesuit.PutOnHelmet();
     }
 
     public void RemoveHelmet()
     {
+        if (!IsHelmetRemoved && _spacesuit.IsWearingSuit() && _spacesuit.IsWearingHelmet())
+        {
+            _spacesuit.RemoveHelmet();
+        }
+
         IsHelmetRemoved = true;
-        _spacesuit.RemoveHelmet();
     }
 
     internal static void AddToPlayerSpacesuit(PlayerSpacesuit spacesuit)
@@ -41,10 +50,11 @@ public class HelmetToggler : MonoBehaviour
 
     internal void OnUpdateOxygenPresence()
     {
-        if (!_spacesuit.IsWearingHelmet() && _wasOxygenPresent && !_resources.IsOxygenPresent())
+        bool isOxygenPresent = _resources.IsOxygenPresent();
+        if (_wasOxygenPresent && !isOxygenPresent)
             PutOnHelmet();
 
-        _wasOxygenPresent = _resources.IsOxygenPresent();
+        _wasOxygenPresent = isOxygenPresent;
     }
 
     private void Awake()
@@ -55,28 +65,30 @@ public class HelmetToggler : MonoBehaviour
         _suitDisplay = FindObjectOfType<SuitNotificationDisplay>();
         Config.OnConfigure += () =>
         {
-            if (Config.HelmetTogglingMode == "Never" && _spacesuit.IsWearingSuit() && !_spacesuit.IsWearingHelmet())
+            if (Config.HelmetTogglingMode == HelmetTogglingMode.Never)
                 PutOnHelmet();
         };
     }
 
     private bool IsInputting()
     {
-        return OWInput.IsInputMode(InputMode.Character) && !_playerController._isMovementLocked && Keyboard.current[Key.H].wasPressedThisFrame;
+        bool canInput = OWInput.IsInputMode(InputMode.Character) && !_playerController._isMovementLocked;
+        bool wasButtonPressed = Keyboard.current[Key.H].wasPressedThisFrame || Gamepad.current[GamepadButton.LeftStick].wasPressedThisFrame;
+        return canInput && wasButtonPressed;
     }
 
     private void Update()
     {
-        if (Config.HelmetTogglingMode != "Never" && _spacesuit.IsWearingSuit() && IsInputting())
+        if (Config.HelmetTogglingMode != HelmetTogglingMode.Never)
         {
-            if (_spacesuit.IsWearingHelmet())
+            if (!IsHelmetRemoved)
             {
-                if (Config.HelmetTogglingMode == "Always" || _resources.IsOxygenPresent())
+                if (Config.HelmetTogglingMode == HelmetTogglingMode.Always || _resources.IsOxygenPresent())
                     RemoveHelmet();
                 else
                     _suitDisplay.PushNotification(new NotificationData(NotificationTarget.Player, "CANNOT REMOVE HELMET — NO OXYGEN DETECTED", 3f));
             }
-            else if (_spacesuit.IsWearingSuit())
+            else
                 PutOnHelmet();
         }
     }

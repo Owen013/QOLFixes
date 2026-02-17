@@ -2,58 +2,55 @@
   "$schema": "https://json-schema.org/draft-07/schema",
   "enabled": true,
   "settings": {
-    "Vanilla-Friendly": {
-      "type": "separator"
-    },
     "ReticleMode": {
       "title": "Reticle Mode",
       "type": "selector",
       "value": "Contextual",
-      "options": [ "Vanilla", "Contextual", "Hidden" ],
-      "tooltip": "Changes whether the dot in the center of the screen is visible. When set to Contextual, the reticle will only appear when using the scout launcher or translator tool. Gameplay impact: None."
+      "options": [ "Default", "Contextual", "Hidden" ],
+      "tooltip": "Changes whether the dot in the center of the screen is visible. When set to Contextual, the reticle will only appear when using the scout launcher or translator tool."
+    },
+
+    "HelmetTogglingMode": {
+      "title": "Enable Helmet Toggling",
+      "type": "selector",
+      "value": "When Safe",
+      "options": [ "Never", "When Safe", "Always" ],
+      "tooltip": "Allows you to take off or put on your helmet by the H key or left thumbstick."
     },
 
     "DisableAutoScoutEquipping": {
       "title": "Disable Automatic Scout Equipping",
       "type": "toggle",
       "value": true,
-      "tooltip": "Disables scout being automatically equipped in certain areas. Gameplay impact: Very little."
+      "tooltip": "Disables the scout launcher being automatically equipped in certain areas."
     },
 
     "DisableFreezeTime": {
-      "title": "Don't Freeze Time at a Certain End-Game Location",
+      "title": "Don't Freeze Time at a Certain Location",
       "type": "toggle",
       "value": true,
-      "tooltip": "Disables the freezing of time in a location where it doesn't matter. Gameplay impact: None."
+      "tooltip": "Stops the game from freezing time during dialogue in a location where time may not even exist."
     },
 
-    "NOT Vanilla-Friendly": {
-      "type": "separator"
-    },
-    "EnableEyesAlwaysGlow": {
-      "title": "Eyes Always Glow",
+    "MoreVisibleGhosts": {
+      "title": "More Visible Ghosts",
       "type": "toggle",
       "value": false,
-      "tooltip": "Makes a certain type of eye always glow. Gameplay impact: Makes certain sections a bit easier."
+      "tooltip": "Makes ghosts easier to see by making their eyes glow at all times."
     },
+
+    "ManualTranslatorEquipping": {
+      "title": "Press 'T' Button to Equip Translator",
+      "type": "toggle",
+      "value": true,
+      "tooltip": "Equip the translator whenever you want by pressing T."
+    },
+
     "EnableDialogueCancelling": {
       "title": "Press 'Cancel' Button to Exit Dialogue",
       "type": "toggle",
       "value": false,
-      "tooltip": "Makes dialogue boxes from speaking to characters or reading notes disappear immediately if the cancel button is pressed. Gameplay impact: Functionally none, but can cause new players to miss information."
-    },
-    "HelmetTogglingMode": {
-      "title": "Press 'H' Button to Toggle Helmet",
-      "type": "selector",
-      "value": "Never",
-      "options": [ "Never", "When Safe", "Always" ],
-      "tooltip": "Allows you to take off or put on your helmet with the H key."
-    },
-    "EnableManualTranslatorEquipping": {
-      "title": "Press 'T' Button to Equip Translator",
-      "type": "toggle",
-      "value": false,
-      "tooltip": "Equip the translator whenever you want by pressing T."
+      "tooltip": "Makes dialogue boxes from speaking to characters or reading notes disappear immediately if the cancel button is pressed."
     }
   }
 }
