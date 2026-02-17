@@ -4,14 +4,14 @@
 ### Features:
 **Reticle Options:** Hide the reticle, or make it appear only while using an aimable tool.
 
-**Translator Equip Button:** Press T to equip the Translator tool whenever you want.
+**Helmet Toggling:** Allows you to take off your space helmet when you don't need it. Also allows you to take off your space helmet even when you do need it.
 
 **Disable Automatic Scout Launcher Equipping:** Stop the game from forcing you to equip the scout launcher in certain areas.
 
 **Don't Freeze Time at a Certain Location:** Stops the game from freezing time during dialogue in a location where time may not even exist.
 
-**Helmet Toggling:** Allows you to take off your space helmet when you don't need it. Also allows you to take off your space helmet even when you do need it.
-
 **More Visible Ghosts:** Makes ghosts more visible by making their eyes glow at all times.
+
+**Translator Equip Button:** Press T to equip the Translator tool whenever you want.
 
 **Dialogue Cancelling:** Allows you to walk away from characters you were talking to. Rude.
